@@ -12,6 +12,9 @@ function ppm_woo_admin_menu() {
     );
 }
 
+/**
+ * Render the application settings form
+ */
 function ppm_woo_contents() {
     ?>
     <h1>PPM Fulfillment Options</h1>
@@ -25,6 +28,9 @@ function ppm_woo_contents() {
     <?php
 }
 
+/**
+ * Create the settings form and populate fields
+ */
 function ppm_woo_settings_init() {
     add_settings_section(
         "ppm_woo_settings_section",
