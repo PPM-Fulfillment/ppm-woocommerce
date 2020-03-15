@@ -58,8 +58,7 @@ function ppm_submit_order($order_id)
         }
     } else {
         $success = "false";
-        $note = __("Failed to connect to PPM's API - Error Code: " . curl_errno($process) . ". Please Check logs");
-        error_log("Error while submitting order " . $order_id);
+        $note = __("Failed to connect to PPM's API - Error Code: " . curl_errno($process) . ". Please contact PPM support.");
     }
 
     curl_close($process);
