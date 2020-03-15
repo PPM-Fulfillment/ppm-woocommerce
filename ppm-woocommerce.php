@@ -17,3 +17,4 @@ define("PPM_WOOCOMMERCE_VERSION", "1.0.0");
 // Admin Options/Config page
 include_once("ppm-options.php");
 include_once("ppm-product-options.php");
+include_once("ppm-order-submission-client.php");
