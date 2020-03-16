@@ -20,10 +20,39 @@ function ppm_submit_order($order_id)
 
     $process = curl_init();
 
+    // Build our Line Items
+    $items = array();
+    foreach($order->get_items() as $item_id => $item) {
+        $product = $item->get_product();
+        $product_sku = null;
+
+        if(is_object($product)) {
+            $product_id = $product->get_id();
+            $product_sku = $product->get_sku();
+        }
+
+        $items[] = array(
+            "ProductId" => $product_sku,
+            "Quantity" => wc_stock_amount($item["qty"]),
+            "Description" => $item["name"],
+            "SKU" => get_post_meta($product_id, "ppm_sku", true),
+            "FulfilledByPPM" => get_post_meta($product_id, "ppm_fulfilled_by", true),
+        );
+    }
+
     $args = array(
-        "ownerCode" => $ownerCode,
         "orderId" => $order_id,
-        "url" => $url,
+        "orderNumber" => $order_id,
+        "ownerCode" => $ownerCode,
+        "shipToName" => $order->get_formatted_shipping_full_name(),
+        "shipToPhoneNumber" => $order->get_billing_phone(),
+        "address1" => $order->get_shipping_address_1(),
+        "address2" => $order->get_shipping_address_2(),
+        "city" => $order->get_shipping_city(),
+        "state" => $order->get_shipping_state(),
+        "zipCode" => $order->get_shipping_postcode(),
+        "shippingMethod" => "2 Day Delivery",
+        "lineItems" => $items,
     );
 
     $curlOptions = array(
@@ -35,7 +64,7 @@ function ppm_submit_order($order_id)
         ],
         CURLOPT_POST => TRUE,
         CURLOPT_POSTFIELDS => json_encode($args),
-        // CURLOPT_SSL_VERIFYPEER => FALSE,
+        CURLOPT_SSL_VERIFYPEER => FALSE,
     );
 
     curl_setopt_array($process, $curlOptions);
