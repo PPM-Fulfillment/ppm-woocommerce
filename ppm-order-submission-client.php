@@ -29,15 +29,27 @@ function ppm_submit_order($order_id)
         if(is_object($product)) {
             $product_id = $product->get_id();
             $product_sku = $product->get_sku();
-        }
 
-        $items[] = array(
-            "ProductId" => $product_sku,
-            "Quantity" => wc_stock_amount($item["qty"]),
-            "Description" => $item["name"],
-            "SKU" => get_post_meta($product_id, "ppm_sku", true),
-            "FulfilledByPPM" => get_post_meta($product_id, "ppm_fulfilled_by", true),
-        );
+            $fulfilled_by_ppm = get_post_meta($product_id, "ppm_fulfilled_by", true);
+
+            if($fulfilled_by_ppm == "yes") {
+                $sku = get_post_meta($product_id, "ppm_sku", true);
+
+                if(empty($sku)) {
+                    $sku = $product_sku;
+                }
+
+                $items[] = array(
+                    "ProductId" => $sku,
+                    "Quantity" => wc_stock_amount($item["qty"]),
+                    "Description" => $item["name"],
+                );
+            }
+        }
+    }
+
+    if (count($items) == 0) {
+        return;
     }
 
     $args = array(
@@ -78,16 +90,16 @@ function ppm_submit_order($order_id)
         switch ($http_code = curl_getinfo($process, CURLINFO_RESPONSE_CODE)) {
             case 200:
             case 201:
-                $note = __("Successfully posted to PPM's API");
+                $note = __("Successfully posted to PPM Fulfillment");
                 break;
             default:
-                $note = __("Failed to post to PPM's API - Please follow up with PPM");
+                $note = __("Failed to post to PPM Fulfillment - Please contact PPM support.");
                 $success = "false";
 
         }
     } else {
         $success = "false";
-        $note = __("Failed to connect to PPM's API - Error Code: " . curl_errno($process) . ". Please contact PPM support.");
+        $note = __("Failed to connect to PPM Fulfillment - Error Code: " . curl_errno($process) . ". Please contact PPM support.");
     }
 
     curl_close($process);
