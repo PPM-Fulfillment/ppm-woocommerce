@@ -18,3 +18,4 @@ define("PPM_WOOCOMMERCE_VERSION", "1.0.0");
 include_once("ppm-options.php");
 include_once("ppm-product-options.php");
 include_once("ppm-order-submission-client.php");
+include_once("ppm-shipping-api-endpoint.php");
