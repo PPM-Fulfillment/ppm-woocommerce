@@ -18,6 +18,11 @@ function ppm_submit_order($order_id)
     $apiKey = get_option("ppm_woo_api_key");
     $ownerCode = get_option("ppm_woo_owner_code");
 
+    // Exit early unless we actually can send anything.
+    if(empty($url) || empty($apiKey) || empty($ownerCode)) {
+        return null;
+    }
+
     $process = curl_init();
 
     // Build our Line Items
