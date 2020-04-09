@@ -13,8 +13,8 @@
   */
  function ppm_woo_add_ppm_sku() {
     $args = array(
-        "label" => __("PPM SKU", "woocommerce"),
-        "placeholder" => __("Enter PPM SKU here", "woocommerce"),
+        "label" => __("PPM SKU", "ppm-woo"),
+        "placeholder" => __("Enter PPM SKU here", "ppm-woo"),
         "id" => "ppm_sku",
         "desc_tip" => true,
         "description" => __(
@@ -47,7 +47,7 @@ add_action("woocommerce_process_product_meta", "ppm_woo_save_ppm_sku");
         "label" => "Fulfilled by PPM?",
         "id" => "ppm_fulfilled_by",
         "desc_tip" => true,
-        "description" => __("Is this item fulfilled by PPM? Check the box if so", "woocommerce"),
+        "description" => __("Is this item fulfilled by PPM? Check the box if so", "ppm-woo"),
     );
     woocommerce_wp_checkbox($args);
  }

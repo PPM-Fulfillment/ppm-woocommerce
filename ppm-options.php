@@ -75,22 +75,22 @@ function ppm_settings_section_callback_function() {
 }
 
 function ppm_woo_api_key_markup() {
-    generic_field_markup("ppm_woo_api_key", "PPM Fulfillment API Key");
+    ppm_woo_generic_field_markup("ppm_woo_api_key", "PPM Fulfillment API Key");
 }
 
 function ppm_woo_owner_code_markup() {
-    generic_field_markup("ppm_woo_owner_code", "PPM Fulfillment Owner Code");
+    ppm_woo_generic_field_markup("ppm_woo_owner_code", "PPM Fulfillment Owner Code");
 }
 
 function ppm_woo_api_url_markup() {
-    generic_field_markup(
+    ppm_woo_generic_field_markup(
         "ppm_woo_api_url", 
         "PPM Fulfillment API URL", 
         "https://portal.ppmfulfillment.com/api/External/ThirdPartyOrders"
     );
 }
 
-function generic_field_markup($field_id, $field_name, $default="") {
+function ppm_woo_generic_field_markup($field_id, $field_name, $default="") {
     ?>
     <label for="<?php echo $field_id; ?>"><?php _e($field_name, "ppm-woo"); ?></label>
     <input 
