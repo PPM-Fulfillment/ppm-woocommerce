@@ -56,6 +56,9 @@ Unfortunately, no. But you can contact PPM Fulfillment to get set up for third-p
 
 == Changelog ==
 
+= 0.1.2 =
+* Minor fixes to workflow
+
 = 0.1.0 =
 * Feature-complete release
 
