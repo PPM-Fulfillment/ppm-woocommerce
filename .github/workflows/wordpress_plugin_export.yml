@@ -1,0 +1,21 @@
+name: Deploy Plugin to Wordpress.org
+on:
+  puths:
+    tags:
+      - "*"
+jobs:
+  tag:
+    name: New Tag
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      run: |
+        npm install
+        npm run build
+    - name: Wordpress Plugin Deploy
+      uses: 10up/action-wordpress-plugin-deploy@1.4.1
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SLUG: ppm-fullfillment-woocommerce
