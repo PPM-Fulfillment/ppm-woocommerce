@@ -1,6 +1,6 @@
 name: Deploy Plugin to Wordpress.org
 on:
-  puths:
+  push:
     tags:
       - "*"
 jobs:
