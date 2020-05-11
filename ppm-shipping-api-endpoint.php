@@ -26,7 +26,7 @@
         "/update-shipments", 
         array(
             "methods" => "POST",
-            "callback" => "update_ppm_tracking_info",
+            "callback" => "update_ppm_tracking_info"
         )
     );
  });

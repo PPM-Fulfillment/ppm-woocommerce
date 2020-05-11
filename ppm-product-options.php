@@ -47,7 +47,7 @@ add_action("woocommerce_process_product_meta", "ppm_woo_save_ppm_sku");
         "label" => "Fulfilled by PPM?",
         "id" => "ppm_fulfilled_by",
         "desc_tip" => true,
-        "description" => __("Is this item fulfilled by PPM? Check the box if so", "ppm-woo"),
+        "description" => __("Is this item fulfilled by PPM? Check the box if so", "ppm-woo")
     );
     woocommerce_wp_checkbox($args);
  }

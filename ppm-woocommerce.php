@@ -5,7 +5,7 @@
 * Description: Fulfill your WooCommerce orders through PPM Fulfillment. Requires WooCommerce to be installed
 * Author: Andrew Ek
 * Text Domain: ppm-woo
-* Version: 0.1.2
+* Version: 0.1.3
 */
 
 // Prevent data leaks
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-define("PPM_WOOCOMMERCE_VERSION", "0.1.2");
+define("PPM_WOOCOMMERCE_VERSION", "0.1.3");
 
 // Admin Options/Config page
 include_once("ppm-options.php");

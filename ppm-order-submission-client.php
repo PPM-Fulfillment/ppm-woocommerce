@@ -23,6 +23,8 @@ function ppm_submit_order($order_id)
         return null;
     }
 
+    $process = curl_init();
+
     // Build our Line Items
     $items = array();
     foreach($order->get_items() as $item_id => $item) {
@@ -45,7 +47,7 @@ function ppm_submit_order($order_id)
                 $items[] = array(
                     "ProductId" => $sku,
                     "Quantity" => wc_stock_amount($item["qty"]),
-                    "Description" => $item["name"],
+                    "Description" => $item["name"]
                 );
             }
         }
@@ -55,7 +57,7 @@ function ppm_submit_order($order_id)
         return;
     }
 
-    $requestBody = array(
+    $args = array(
         "orderId" => $order_id,
         "orderNumber" => $order_id,
         "ownerCode" => $ownerCode,
@@ -67,42 +69,52 @@ function ppm_submit_order($order_id)
         "state" => $order->get_shipping_state(),
         "zipCode" => $order->get_shipping_postcode(),
         "shippingMethod" => "2 Day Delivery",
-        "lineItems" => $items,
+        "lineItems" => $items
     );
 
-    // Submit our POST request to the API
-    $args = array(
-        "body" => $requestBody,
-        "headers" => [
+    $curlOptions = array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $url,
+        CURLOPT_HTTPHEADER => [
             "Authorization: Bearer " . $apiKey,
             "Content-Type: application/json"
         ],
+        CURLOPT_POST => TRUE,
+        CURLOPT_POSTFIELDS => json_encode($args),
+        CURLOPT_SSL_VERIFYPEER => FALSE
     );
 
-    $response = wp_remote_post($url, $args);
+    curl_setopt_array($process, $curlOptions);
 
-    $responseBody = wp_remote_retrieve_body($response);
-    $responseCode = wp_remote_retrieve_response_code($response);
+    $resultBody = curl_exec($process);
 
     $success = "true";
     $note = "";
 
-    switch ($responseCode) {
-        case 200:
-        case 201:
-            $note = __("Successfully posted to PPM Fulfillment", "ppm-woo");
-            break;
-        default:
-            $note = __("Failed to post to PPM Fulfillment - Please contact PPM support.", "ppm-woo");
-            $success = "false";
+    if (!curl_errno($process)) {
+        switch ($http_code = curl_getinfo($process, CURLINFO_RESPONSE_CODE)) {
+            case 200:
+            case 201:
+                $note = __("Successfully posted to PPM Fulfillment");
+                break;
+            default:
+                $note = __("Failed to post to PPM Fulfillment - Please contact PPM support.");
+                $success = "false";
+
+        }
+    } else {
+        $success = "false";
+        $note = __("Failed to connect to PPM Fulfillment - Error Code: " . curl_errno($process) . ". Please contact PPM support.");
     }
+
+    curl_close($process);
 
     $order->add_order_note($note);
 
     return array(
-        "body" => $responseBody,
+        "body" => $resultBody,
         "success" => $success,
-        "url" => $url,
+        "url" => $url
     );
 }
 

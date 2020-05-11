@@ -8,7 +8,7 @@ function ppm_woo_admin_menu() {
         __("PPM Options", "ppm-woo"),
         "manage_options",
         "ppm-woo-options",
-        "ppm_woo_contents",
+        "ppm_woo_contents"
     );
 }
 
