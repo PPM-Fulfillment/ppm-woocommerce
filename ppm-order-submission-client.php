@@ -53,6 +53,14 @@ function ppm_submit_order($order_id)
         }
     }
 
+    // Shipping Method must be on of the approved entries from this list: 
+    // https://app.swaggerhub.com/apis-docs/PPM-Fulfillment/PPMCustomerExternalAPI/1.0.0#/SubmitOrderModel
+    // We re-map as best we can.
+    $shippingMethod = "";
+    if(preg_match("/^ground/i", $order->get_shipping_method())) {
+        $shippingMethod = "Ground Delivery";
+    }
+
     if (count($items) == 0) {
         return;
     }
@@ -68,7 +76,7 @@ function ppm_submit_order($order_id)
         "city" => $order->get_shipping_city(),
         "state" => $order->get_shipping_state(),
         "zipCode" => $order->get_shipping_postcode(),
-        "shippingMethod" => "2 Day Delivery",
+        "shippingMethod" => $shippingMethod,
         "lineItems" => $items
     );
 

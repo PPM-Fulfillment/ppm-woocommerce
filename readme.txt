@@ -56,6 +56,9 @@ Unfortunately, no. But you can contact PPM Fulfillment to get set up for third-p
 
 == Changelog ==
 
+= 0.1.4 =
+* Better handle shipping options
+
 = 0.1.3 =
 * Change WP HTTP client to Curl; This resolves issues with JSON encoding
 
