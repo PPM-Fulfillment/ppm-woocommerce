@@ -56,6 +56,9 @@ Unfortunately, no. But you can contact PPM Fulfillment to get set up for third-p
 
 == Changelog ==
 
+= 0.1.6 =
+* Add Advanced Shipment Tracking integration
+
 = 0.1.5 =
 * Add ability to handle product variants
 
