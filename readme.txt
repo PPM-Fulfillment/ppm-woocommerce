@@ -56,6 +56,10 @@ Unfortunately, no. But you can contact PPM Fulfillment to get set up for third-p
 
 == Changelog ==
 
+= 0.1.7 =
+* Better Advanced Shipment Tracking integration
+* Integration with Woocommerce Shipment Tracking
+
 = 0.1.6 =
 * Add Advanced Shipment Tracking integration
 

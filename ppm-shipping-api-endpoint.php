@@ -45,8 +45,18 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
     return $response;
   }
 
+  // WooCommerce Shipment Tracking
+  if(function_exists("wc_st_add_tracking_number")) {
+    wc_st_add_tracking_number(
+      $order_id,
+      $tracking_number,
+      $carrier,
+      date("Y-m-d")
+    );
+  }
+
   // Advanced Shipment Tracking
-  if(is_plugin_active("woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php")) {
+  if(class_exists("WC_Advanced_Shipment_Tracking_Actions")) {
     $trackingAction = WC_Advanced_Shipment_Tracking_Actions::get_instance();
     $trackingArgs = array(
       "tracking_provider" => $carrier,
