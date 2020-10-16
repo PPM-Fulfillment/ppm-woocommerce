@@ -47,6 +47,13 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
 
   // WooCommerce Shipment Tracking
   if(function_exists("wc_st_add_tracking_number")) {
+    // The OMS sends us "FedEx"; AfterShip and WST expect "Fedex", otherwise
+    // tracking info breaks.
+
+    if($carrier == "FedEx") {
+      $carrier = "Fedex";
+    }
+
     wc_st_add_tracking_number(
       $order_id,
       $tracking_number,
@@ -132,6 +139,10 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
     $note_text = $tracking_string . "\n" . $product_name . $qty_string . $lot_string . $serial_string;
 
     $order->add_order_note($note_text);
+
+    if (!empty($order)) {
+      $order->update_status( "completed" );
+    }
   }
 
   $response = new WP_REST_Response(array("success" => TRUE));
