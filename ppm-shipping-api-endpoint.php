@@ -79,6 +79,8 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
   $note = "Received Tracking Information." . $carrier_string . "\n" . $tracking_string;
   $order->add_order_note($note);
 
+  $mark_as_completed = true;
+
   // Get all order items so we can match to line items in POST body
   $order_items = array();
   foreach($order->get_items() as $item_id => $item) {
@@ -86,10 +88,13 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
 
     if(is_object($product)) {
       $ppm_sku = get_post_meta($product->get_id(), "ppm_sku", true);
+
       $sku = $product->get_sku();
 
-      // Set fallback SKU for querying
-      if(!empty($ppm_sku)) {
+      if(empty($ppm_sku)) {
+        $mark_as_completed = false;
+      } else {
+        // Set fallback SKU for querying
         $sku = $ppm_sku;
       }
 
@@ -139,10 +144,11 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
     $note_text = $tracking_string . "\n" . $product_name . $qty_string . $lot_string . $serial_string;
 
     $order->add_order_note($note_text);
+  }
 
-    if (!empty($order)) {
-      $order->update_status( "completed" );
-    }
+  // TODO Is this correct to move this here????
+  if (!empty($order) && $mark_as_completed) {
+    $order->update_status( "completed" );
   }
 
   $response = new WP_REST_Response(array("success" => TRUE));
