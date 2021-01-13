@@ -79,6 +79,9 @@ https://home.ppmfulfillment.com/contact-us/
 
 == Changelog ==
 
+= 0.1.9 =
+* Fix order completion on mixed PPM/non-PPM order items
+
 = 0.1.8 =
 * Fix order status bug
 * Fix FedEx carriers with Aftership and WooCommerce Shipment Tracking
