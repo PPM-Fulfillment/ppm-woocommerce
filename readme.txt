@@ -79,6 +79,9 @@ https://home.ppmfulfillment.com/contact-us/
 
 == Changelog ==
 
+= 0.1.10 =
+* Revert order completion logic
+
 = 0.1.9 =
 * Fix order completion on mixed PPM/non-PPM order items
 

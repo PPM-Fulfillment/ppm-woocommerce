@@ -6,7 +6,7 @@
  * + If so, grab just those items and quantities
  * + Use PPM SKU or fallback to regular SKU
  * + Package everything up and ship it to PPM
- * 
+ *
  * We add a note to the order if there are any interactions with PPM's API.
  */
 
@@ -35,9 +35,9 @@ function ppm_submit_order($order_id)
             $product_id = $product->get_id();
             $product_sku = $product->get_sku();
 
-            $fulfilled_by_ppm = get_post_meta($product_id, "ppm_fulfilled_by", true);
+            $ppm_fulfilled_by = get_post_meta($product_id, "ppm_fulfilled_by", true);
 
-            if($fulfilled_by_ppm == "yes") {
+            if($ppm_fulfilled_by == "yes") {
                 $sku = get_post_meta($product_id, "ppm_sku", true);
 
                 if(empty($sku)) {
@@ -47,13 +47,13 @@ function ppm_submit_order($order_id)
                 $items[] = array(
                     "ProductId" => $sku,
                     "Quantity" => wc_stock_amount($item["qty"]),
-                    "Description" => $item["name"]
+                    "Description" => $item["name"],
                 );
             }
         }
     }
 
-    // Shipping Method must be on of the approved entries from this list: 
+    // Shipping Method must be on of the approved entries from this list:
     // https://app.swaggerhub.com/apis-docs/PPM-Fulfillment/PPMCustomerExternalAPI/1.0.0#/SubmitOrderModel
     // We re-map as best we can.
     $shippingMethod = "";

@@ -146,11 +146,6 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
     $order->add_order_note($note_text);
   }
 
-  // TODO Is this correct to move this here????
-  if (!empty($order) && $mark_as_completed) {
-    $order->update_status( "completed" );
-  }
-
   $response = new WP_REST_Response(array("success" => TRUE));
   $response->set_status(200);
   return $response;
