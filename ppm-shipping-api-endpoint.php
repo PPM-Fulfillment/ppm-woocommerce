@@ -68,7 +68,7 @@ function update_ppm_tracking_info(WP_REST_REQUEST $request) {
     $trackingArgs = array(
       "tracking_provider" => $carrier,
       "tracking_number" => $tracking_number,
-      "status_shipped" => 1,
+      "status_shipped" => 2,
       "date_shipped" => date("Y-m-d")
     );
     $trackingAction->insert_tracking_item($order_id, $trackingArgs);

@@ -79,6 +79,9 @@ https://home.ppmfulfillment.com/contact-us/
 
 == Changelog ==
 
+= 0.1.11 =
+* Further reversion to order completion logic
+
 = 0.1.10 =
 * Revert order completion logic
 
