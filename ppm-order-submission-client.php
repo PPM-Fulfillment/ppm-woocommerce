@@ -54,8 +54,7 @@ function ppm_submit_order($order_id)
     }
 
     // Shipping Method must be on of the approved entries from this list:
-    // https://app.swaggerhub.com/apis-docs/PPM-Fulfillment/PPMCustomerExternalAPI/1.0.0#/SubmitOrderModel
-    // We re-map as best we can.
+    // shippingMethod is soon to be deprecated and will only be used to support legacy merchants
     $shippingMethod = "";
     if(preg_match("/^ground/i", $order->get_shipping_method())) {
         $shippingMethod = "Ground Delivery";
@@ -77,6 +76,7 @@ function ppm_submit_order($order_id)
         "state" => $order->get_shipping_state(),
         "zipCode" => $order->get_shipping_postcode(),
         "shippingMethod" => $shippingMethod,
+        "wooCommerceShippingMethod" => $order->get_shipping_method(),
         "lineItems" => $items
     );
 
