@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-define("PPM_WOOCOMMERCE_VERSION", "0.1.11");
+define("PPM_WOOCOMMERCE_VERSION", "0.1.12");
 
 // Admin Options/Config page
 include_once("ppm-options.php");
